@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>問答網頁</title>
+    <style>
+        /* 加入一些基本的樣式 */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        .question {
+            margin-bottom: 10px;
+        }
+        .answer {
+            margin-left: 20px;
+            color: #555;
+        }
+    </style>
+</head>
+<body>
+    <div id="question-container">
+        <h2>提問：</h2>
+        <input type="text" id="question-input" placeholder="輸入你的問題">
+        <button onclick="addQuestion()">提交問題</button>
+    </div>
+
+    <div id="questions-list">
+        <!-- 這裡將顯示問題列表 -->
+    </div>
+
+    <script>
+        // JavaScript 代碼
+        function addQuestion() {
+            // 獲取問題輸入框的值
+            var questionInput = document.getElementById("question-input");
+            var questionText = questionInput.value;
+
+            if (questionText.trim() === "") {
+                alert("請輸入問題！");
+                return;
+            }
+
+            // 創建問題元素
+            var questionElement = document.createElement("div");
+            questionElement.className = "question";
+            questionElement.innerHTML = "<h3>" + questionText + "</h3>";
+
+            // 創建回答框
+            var answerInput = document.createElement("input");
+            answerInput.type = "text";
+            answerInput.placeholder = "回答這個問題";
+
+            // 創建回答按鈕
+            var answerButton = document.createElement("button");
+            answerButton.innerHTML = "回答";
+            answerButton.onclick = function () {
+                var answerText = answerInput.value;
+                if (answerText.trim() === "") {
+                    alert("請輸入回答！");
+                    return;
+                }
+
+                // 創建回答元素
+                var answerElement = document.createElement("p");
+                answerElement.className = "answer";
+                answerElement.innerHTML = "<strong>回答：</strong>" + answerText;
+
+                // 將回答元素添加到問題元素中
+                questionElement.appendChild(answerElement);
+
+                // 清空回答框
+                answerInput.value = "";
+            };
+
+            // 將回答框和回答按鈕添加到問題元素中
+            questionElement.appendChild(answerInput);
+            questionElement.appendChild(answerButton);
+
+            // 將問題元素添加到問題列表中
+            var questionsList = document.getElementById("questions-list");
+            questionsList.appendChild(questionElement);
+
+            // 清空問題輸入框
+            questionInput.value = "";
+        }
+    </script>
+</body>
+</html>
