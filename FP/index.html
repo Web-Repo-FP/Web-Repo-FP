@@ -5,14 +5,44 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>問答網頁</title>
     <style>
-        /* 加入一些基本的樣式 */
         body {
             font-family: Arial, sans-serif;
             margin: 20px;
         }
-        .question {
-            margin-bottom: 10px;
+        
+        #question-container {
+            text-align: center;
+            margin-bottom: 20px;
         }
+        
+        #question-input {
+            margin: 0px 0px 10px 0px; /* 上 右 下 左 */
+            height: 40px; /* 調整提問欄的高度 */
+            padding: 5px; /* 添加內部填充 */
+        }
+        
+        #question-buttons {
+            margin-top: 10px; /* 與上方的問題輸入框有一個間距 */
+        }
+        
+        #submit-button {
+            margin-left: 5px; /* 提交按鈕和輸入框之間的間距 */
+        }
+        
+        #questions-list {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+        }
+        
+        .question {
+            width: 24%;
+            box-sizing: border-box;
+            margin-bottom: 10px;
+            padding: 10px;
+            border: 1px solid #ddd;
+        }
+        
         .answer {
             margin-left: 20px;
             color: #555;
@@ -21,9 +51,11 @@
 </head>
 <body>
     <div id="question-container">
-        <h2>提問：</h2>
+        <h2>提問</h2>
         <input type="text" id="question-input" placeholder="輸入你的問題">
-        <button onclick="addQuestion()">提交問題</button>
+        <div id="question-buttons">
+            <button onclick="addQuestion()" id="submit-button">提交問題</button>
+        </div>
     </div>
 
     <div id="questions-list">
