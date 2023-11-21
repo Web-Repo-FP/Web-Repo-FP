@@ -5,48 +5,73 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>問答網頁</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 20px;
-        }
-        
-        #question-container {
-            text-align: center;
-            margin-bottom: 20px;
-        }
-        
-        #question-input {
-            margin: 0px 0px 10px 0px; /* 上 右 下 左 */
-            height: 40px; /* 調整提問欄的高度 */
-            padding: 5px; /* 添加內部填充 */
-        }
-        
-        #question-buttons {
-            margin-top: 10px; /* 與上方的問題輸入框有一個間距 */
-        }
-        
-        #submit-button {
-            margin-left: 5px; /* 提交按鈕和輸入框之間的間距 */
-        }
-        
-        #questions-list {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: space-between;
-        }
-        
-        .question {
-            width: 24%;
-            box-sizing: border-box;
-            margin-bottom: 10px;
-            padding: 10px;
-            border: 1px solid #ddd;
-        }
-        
-        .answer {
-            margin-left: 20px;
-            color: #555;
-        }
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f4f4f4;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.container {
+  background-color: #fff;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  border-radius: 8px;
+  max-width: 600px;
+  width: 100%;
+}
+
+h1, h2 {
+  color: #333;
+}
+
+form {
+  margin-top: 20px;
+}
+
+label {
+  display: block;
+  margin-bottom: 8px;
+  color: #333;
+}
+
+input, textarea {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+button {
+  background-color: #3498db;
+  color: #fff;
+  padding: 10px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+#questions-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.question {
+  width: 48%;
+  box-sizing: border-box;
+  margin-bottom: 10px;
+  padding: 10px;
+  border: 1px solid #ddd;
+  background-color: #fff;
+}
+
     </style>
 </head>
 <body>
