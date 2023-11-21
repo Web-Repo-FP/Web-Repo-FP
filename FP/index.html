@@ -13,19 +13,34 @@
         #question-container {
             text-align: center;
             margin-bottom: 20px;
+            border-radius: 20px;
         }
         
         #question-input {
             margin: 0px 0px 10px 0px; /* 上 右 下 左 */
             height: 40px; /* 調整提問欄的高度 */
             padding: 5px; /* 添加內部填充 */
+            border-radius: 20px;
+        }
+        #answer-input {
+            margin: 0px 5px 0px 0px; /* 上 右 下 左 */
+            height: 40px; /* 調整提問欄的高度 */
+            padding: 5px; /* 添加內部填充 */
+            border-radius: 20px;
         }
         
         #question-buttons {
             margin-top: 10px; /* 與上方的問題輸入框有一個間距 */
+            border-radius: 20px;
         }
         
         #submit-button {
+            background-color: #3498db; /* 藍色背景 */
+            color: #fff; /* 白色文字 */
+            border: none; /* 去除邊框 */
+            padding: 10px 15px; /* 調整按鈕內部填充 */
+            cursor: pointer;
+            border-radius: 20px;
             margin-left: 5px; /* 提交按鈕和輸入框之間的間距 */
         }
         
@@ -38,11 +53,12 @@
         .question {
             width: 24%;
             box-sizing: border-box;
-            margin-bottom: 10px;
+            margin: 0 0 10px 0; /* 上 右 下 左 */
             padding: 10px;
             border: 1px solid #ddd;
+            border-radius: 20px;
         }
-        
+                
         .answer {
             margin-left: 20px;
             color: #555;
@@ -81,11 +97,13 @@
 
             // 創建回答框
             var answerInput = document.createElement("input");
+            answerInput.id = "answer-input";
             answerInput.type = "text";
             answerInput.placeholder = "回答這個問題";
 
             // 創建回答按鈕
             var answerButton = document.createElement("button");
+            answerButton.id = "submit-button";
             answerButton.innerHTML = "回答";
             answerButton.onclick = function () {
                 var answerText = answerInput.value;
