@@ -9,31 +9,32 @@
             font-family: Arial, sans-serif;
             margin: 20px;
         }
-        
+
         #question-container {
             text-align: center;
             margin-bottom: 20px;
             border-radius: 20px;
         }
-        
+
         #question-input {
             margin: 0px 0px 10px 0px; /* 上 右 下 左 */
             height: 40px; /* 調整提問欄的高度 */
             padding: 5px; /* 添加內部填充 */
             border-radius: 20px;
         }
+
         #answer-input {
             margin: 0px 5px 0px 0px; /* 上 右 下 左 */
             height: 40px; /* 調整提問欄的高度 */
             padding: 5px; /* 添加內部填充 */
             border-radius: 20px;
         }
-        
+
         #question-buttons {
             margin-top: 10px; /* 與上方的問題輸入框有一個間距 */
             border-radius: 20px;
         }
-        
+
         #submit-button {
             background-color: #3498db; /* 藍色背景 */
             color: #fff; /* 白色文字 */
@@ -43,13 +44,13 @@
             border-radius: 20px;
             margin-left: 5px; /* 提交按鈕和輸入框之間的間距 */
         }
-        
+
         #questions-list {
             display: flex;
             flex-wrap: wrap;
             justify-content: space-between;
         }
-        
+
         .question {
             width: 24%;
             box-sizing: border-box;
@@ -58,10 +59,20 @@
             border: 1px solid #ddd;
             border-radius: 20px;
         }
-                
+
         .answer {
             margin-left: 20px;
             color: #555;
+        }
+
+        .like-button {
+            background-color: #4CAF50; /* Green background */
+            color: white; /* White text */
+            padding: 8px 12px; /* Padding */
+            border: none; /* No border */
+            border-radius: 5px; /* Rounded corners */
+            cursor: pointer; /* Cursor on hover */
+            margin-right: 5px; /* Margin between like button and answer text */
         }
     </style>
 </head>
@@ -79,61 +90,116 @@
     </div>
 
     <script>
-        // JavaScript 代碼
+        document.getElementById("question-input").addEventListener("keyup", function (event) {
+            if (event.key === "Enter") {
+                addQuestion();
+            }
+        });
+    
         function addQuestion() {
-            // 獲取問題輸入框的值
             var questionInput = document.getElementById("question-input");
             var questionText = questionInput.value;
-
+    
             if (questionText.trim() === "") {
                 alert("請輸入問題！");
                 return;
             }
-
-            // 創建問題元素
+    
             var questionElement = document.createElement("div");
             questionElement.className = "question";
             questionElement.innerHTML = "<h3>" + questionText + "</h3>";
-            
-            // 創建回答框
+    
+            // 在這裡為每個問題添加一個答案數組
+            questionElement.answers = [];
+            questionElement.likes = 0; // 初始讚數為0
+    
+            var answerContainer = document.createElement("div");
+            answerContainer.className = "answer-container";
+            questionElement.appendChild(answerContainer);
+    
             var answerInput = document.createElement("input");
             answerInput.id = "answer-input";
             answerInput.type = "text";
             answerInput.placeholder = "回答這個問題";
-
-            // 創建回答按鈕
+    
             var answerButton = document.createElement("button");
             answerButton.id = "submit-button";
             answerButton.innerHTML = "回答";
             answerButton.onclick = function () {
-                var answerText = answerInput.value;
-                if (answerText.trim() === "") {
-                    alert("請輸入回答！");
-                    return;
-                }
-
-                // 創建回答元素
-                var answerElement = document.createElement("p");
-                answerElement.className = "answer";
-                answerElement.innerHTML = "<strong>回答：</strong>" + answerText;
-
-                // 將回答元素添加到問題元素中
-                questionElement.appendChild(answerElement);
-
-                // 清空回答框
-                answerInput.value = "";
+                submitAnswer(questionElement, answerInput);
             };
-
-            // 將回答框和回答按鈕添加到問題元素中
+    
+            answerInput.addEventListener("keyup", function (event) {
+                if (event.key === "Enter") {
+                    submitAnswer(questionElement, answerInput);
+                }
+            });
+    
             questionElement.appendChild(answerInput);
             questionElement.appendChild(answerButton);
-
-            // 將問題元素添加到問題列表中
+    
             var questionsList = document.getElementById("questions-list");
             questionsList.appendChild(questionElement);
-
-            // 清空問題輸入框
+    
             questionInput.value = "";
+        }
+    
+        function submitAnswer(questionElement, answerInput) {
+            var answerText = answerInput.value;
+            if (answerText.trim() === "") {
+                alert("請輸入回答！");
+                return;
+            }
+    
+            // 將答案和讚數添加到該問題的答案數組中
+            var answer = {
+                text: answerText,
+                likes: 0
+            };
+            questionElement.answers.push(answer);
+    
+            // 在添加答案後重新排序
+            sortAnswers(questionElement);
+    
+            answerInput.value = "";
+        }
+    
+        function sortAnswers(questionElement) {
+            // 獲取該問題的答案數組
+            var answers = questionElement.answers;
+    
+            // 按讚數排序
+            answers.sort(function (a, b) {
+                return b.likes - a.likes;
+            });
+    
+            // 清空原有的答案區域
+            var answerContainer = questionElement.querySelector(".answer-container");
+            answerContainer.innerHTML = "";
+    
+            // 將排序後的答案添加回答案區域
+            answers.forEach(function (answer) {
+                var answerElement = document.createElement("p");
+                answerElement.className = "answer";
+                answerElement.innerHTML = "<strong>回答：</strong>" + answer.text + " (👍 " + answer.likes + ")";
+                answerContainer.appendChild(answerElement);
+    
+                var likeButton = document.createElement("button");
+                likeButton.className = "like-button";
+                likeButton.innerHTML = "👍";
+                likeButton.onclick = function () {
+                    likeAnswer(answer, questionElement);
+                };
+                answerElement.appendChild(likeButton);
+            });
+        }
+    
+        function likeAnswer(answer, questionElement) {
+            // 更新答案的讚數
+            answer.likes += 1;
+    
+            // 調用 sortAnswers 更新排序
+            sortAnswers(questionElement);
         }
     </script>
 </body>
