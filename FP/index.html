@@ -66,9 +66,9 @@
         }
 
         .like-button {
-            background-color: #4CAF50; /* Green background */
+            background-color: #3498db; 
             color: white; /* White text */
-            padding: 8px 12px; /* Padding */
+            padding: 8px 10px; /* Padding */
             border: none; /* No border */
             border-radius: 5px; /* Rounded corners */
             cursor: pointer; /* Cursor on hover */
@@ -181,26 +181,41 @@
             answers.forEach(function (answer) {
                 var answerElement = document.createElement("p");
                 answerElement.className = "answer";
-                answerElement.innerHTML = "<strong>回答：</strong>" + answer.text + " (👍 " + answer.likes + ")";
-                answerContainer.appendChild(answerElement);
-    
+                answerElement.innerHTML = "<strong>回答：</strong>" + answer.text;
+            
                 var likeButton = document.createElement("button");
                 likeButton.className = "like-button";
-                likeButton.innerHTML = "👍";
+                likeButton.innerHTML = "👍 " + answer.likes;  // 將按讚數整合到按鈕中
                 likeButton.onclick = function () {
                     likeAnswer(answer, questionElement);
                 };
+            
                 answerElement.appendChild(likeButton);
+                answerContainer.appendChild(answerElement);
             });
+
         }
     
         function likeAnswer(answer, questionElement) {
             // 更新答案的讚數
             answer.likes += 1;
-    
+
             // 調用 sortAnswers 更新排序
             sortAnswers(questionElement);
+
+            // 更新按讚按鈕的內容
+            updateLikeButton(answer, questionElement);
         }
+
+        function updateLikeButton(answer, questionElement) {
+            // 找到對應的按讚按鈕
+            var answerContainer = questionElement.querySelector(".answer-container");
+            var likeButton = answerContainer.querySelector(".like-button");
+
+            // 更新按讚按鈕的內容
+            likeButton.innerHTML = "👍 " + answer.likes;
+        }
+
     </script>
 </body>
 </html>
