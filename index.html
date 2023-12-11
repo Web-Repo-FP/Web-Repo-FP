@@ -150,51 +150,60 @@
                 alert("請輸入回答！");
                 return;
             }
-    
-            // 將答案和讚數添加到該問題的答案數組中
+        
+            // 為每個答案創建獨立的按讚數組
             var answer = {
                 text: answerText,
                 likes: 0
             };
+        
+            // 添加答案到問題的答案數組中
             questionElement.answers.push(answer);
-    
-            // 在添加答案後重新排序
-            sortAnswers(questionElement);
-    
+        
+            // 清空答案輸入框
             answerInput.value = "";
-        }
+        
+            // 渲染答案，包括新添加的答案
+            sortAnswers(questionElement);
+        }        
     
         function sortAnswers(questionElement) {
             // 獲取該問題的答案數組
             var answers = questionElement.answers;
-    
-            // 按讚數排序
+        
+            // 按讚數排序，並保持相同讚數答案的原有順序
             answers.sort(function (a, b) {
-                return b.likes - a.likes;
+                if (a.likes === b.likes) {
+                    // 如果讚數相同，保持原有順序
+                    return 0;
+                } else {
+                    // 否則按讚數降序排序
+                    return b.likes - a.likes;
+                }
             });
-    
+        
             // 清空原有的答案區域
             var answerContainer = questionElement.querySelector(".answer-container");
             answerContainer.innerHTML = "";
-    
+        
             // 將排序後的答案添加回答案區域
             answers.forEach(function (answer) {
                 var answerElement = document.createElement("p");
                 answerElement.className = "answer";
                 answerElement.innerHTML = "<strong>回答：</strong>" + answer.text;
-            
+        
                 var likeButton = document.createElement("button");
                 likeButton.className = "like-button";
-                likeButton.innerHTML = "👍 " + answer.likes;  // 將按讚數整合到按鈕中
+                likeButton.innerHTML = "👍 " + answer.likes;
                 likeButton.onclick = function () {
                     likeAnswer(answer, questionElement);
                 };
-            
+        
                 answerElement.appendChild(likeButton);
                 answerContainer.appendChild(answerElement);
             });
-
         }
+        
     
         function likeAnswer(answer, questionElement) {
             // 更新答案的讚數
@@ -202,9 +211,6 @@
 
             // 調用 sortAnswers 更新排序
             sortAnswers(questionElement);
-
-            // 更新按讚按鈕的內容
-            updateLikeButton(answer, questionElement);
         }
 
         function updateLikeButton(answer, questionElement) {
