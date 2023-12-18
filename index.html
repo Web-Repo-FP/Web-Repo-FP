@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>問答網頁</title>
+    <title> 知識+</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -18,8 +18,8 @@
 
         #question-input {
             margin: 0px 0px 10px 0px; /* 上 右 下 左 */
-            height: 40px; /* 調整提問欄的高度 */
-            padding: 5px; /* 增加內部填充 */
+            height: 70px; /* 調整提問欄的高度 */
+            padding: 10px; /* 增加內部填充 */
             border-radius: 20px;
         }
 
@@ -74,11 +74,12 @@
             cursor: pointer; /* Cursor on hover */
             margin-right: 5px; /* Margin between like button and answer text */
         }
+        
     </style>
 </head>
 <body>
     <div id="question-container">
-        <h2>提問</h2>
+        <h1>提問</h1>
         <input type="text" id="question-input" placeholder="輸入你的問題">
         <div id="question-buttons">
             <button onclick="addQuestion()" id="submit-button">提交問題</button>
@@ -111,7 +112,7 @@
     
             // 在這裡為每個問題添加一個答案數組
             questionElement.answers = [];
-            questionElement.likes = 0; // 初始讚數為0
+            questionElement.likes = 0; // 初始讚數為0s
     
             var answerContainer = document.createElement("div");
             answerContainer.className = "answer-container";
